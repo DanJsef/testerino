@@ -11,8 +11,13 @@ app.use(bp.urlencoded({ extended: true }));
 
 app.use(cors());
 
-app.post('/', (req, res) => {
+const multer = require("multer");
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
+app.post('/', upload.single("file"), (req, res) => {
   console.log(req.body);
+  console.log(req.file);
   res.send('Hello World!');
 });
 
